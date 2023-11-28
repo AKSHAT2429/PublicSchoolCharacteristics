@@ -2,4 +2,27 @@
 
 ## Description
 
+## Research Plan
+We can go into more detail about how each of these factors helps to answer the study questions about educational fairness and geographical differences in US public schools given the dataset columns that are provided:
+
+1. *Geographical Information:*
+   - *Location Address, City, State, ZIP Code, Latitude, and Longitude:* It is possible to identify schools in urban, suburban, or rural locations thanks to the extensive geographic information about each school that is provided in these columns. The distribution of schools across the nation can be mapped and visualised through the use of latitude and longitude in spatial analysis.
+   - *County Name:* This variable enables more investigation of the geographic setting, taking into account features at the county level that could affect educational results.
+
+2. *Educational Equity:*
+   - *Total of Free Lunch and Reduced-Price Lunch Eligible, Free Lunch Program, Reduced-Lunch Program:* These columns shed light on pupils' socioeconomic circumstances. Examining these characteristics can assist in determining the student population's economic background, which is important information for comprehending educational equity.
+   - *Title I Eligible, School-wide Title I:* These columns provide information about a school's eligibility for Title I financing, which is frequently linked to educational institutions that serve kids from low-income backgrounds.
+   - *Total Students, All Grades:* One key indicator of the overall size of the institution is the total number of students. It is used as the denominator in the computation of several ratios, such as the student-teacher ratio.
+   - *Total Teachers, Student-Teacher Ratio:* Details about each school's instructional materials are provided in these columns. In order to ensure educational equity, it is essential to assess the sufficiency of teacher resources, which can be done by analysing these variables.
+
+3. *Racial Disparities:*
+   - *Columns for Students of Different Racial Backgrounds (e.g., AM, AS, BL, HP, HI, TR, WH):* A breakdown of student enrollment by gender and race is shown in these columns. It is possible to investigate racial differences in enrollment, performance, and resource access through the analysis of these variables.
+
+4. *School Characteristics:*
+   - *Whether a Charter School, Magnet School Indicator, Virtual School Status:* The sort of school is described in these columns. Understanding how various school types contribute to patterns connected to equity and geography can be gained through the analysis of these factors.
+   - *School Level:* This variable provides information about whether disparities and equity issues fluctuate at different educational levels by classifying schools into elementary, middle, and high schools.
+   - *Locale Code:* This code categorises the school's location, specifying whether it is in a town, city, suburb, or rural area. Investigating the potential effects of the local environment on educational outcomes requires this information.
+
+These factors can be combined and analysed to answer the research questions given in the introduction. Finding trends, relationships, and disparities pertaining to geography, race, and educational equity can be accomplished through the use of statistical modelling, spatial analysis, and data visualisation approaches. A thorough investigation of the intricacies of the US public education system can be supported by the dataset's rich information on student demographics, school features, and geographic location.
+
 ## Missing value analysis
