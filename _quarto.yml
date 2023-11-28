@@ -8,9 +8,9 @@ execute:
 book:
   title: "YOUR PROJECT TITLE"
   author:
-    - AUTHOR1 (UNI1)
-    - AUTHOR2 (UNI2)
-  repo-url: https://github.com/YOUR_GITHUB_ACCOUNT/REPO_NAME
+    - Sahil Bhave (sb4865)
+    - Akshat Agrawal (aa5252)
+  repo-url: https://github.com/SahilBhave/PublicSchoolCharacteristics.git
   date: today
   page-footer:
     right: |
