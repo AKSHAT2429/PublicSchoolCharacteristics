@@ -242,6 +242,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="missing-value-analysis" class="level2" data-number="2.3">
 <h2 data-number="2.3" class="anchored" data-anchor-id="missing-value-analysis"><span class="header-section-number">2.3</span> Missing value analysis</h2>
+<p>In our analysis, we are specifically examining missing values in the “total” column, which signifies the total number of students enrolled in each school. This column holds significant importance because the absence of total student numbers for a school renders the analysis of student figures across different races meaningless. Thus, our initial focus is on analyzing the percentage of missing values for total student counts in each state.</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
@@ -263,6 +264,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><img src="data_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+<p>The U.S. education system categorizes grades into corresponding school levels, such as Adult Education (AE), Prekindergarten (PK) for Prekindergarten, Prekindergarten (PK) to Grade 5 (G5) for Elementary, Grades 6 to 8 (G6-G8) for Middle School, and Grades 9 to 12 (G9-G12) for High School and Secondary. In our upcoming analysis, we’ve visualized missing values for each grade based on their associated school levels. To ensure a focused examination, it’s crucial to recognize the specific grades within each school level. Notably, a school level may not encompass all grades, as indicated in the graphical representation. For instance, when analyzing the “High School” category, missing values in columns “G09” through “G12” are of interest, recognizing that a high school is not expected to have students enrolled in, for instance, “G01.” and hence the missing values in “G01” can be ignored. This nuanced approach enables a more accurate assessment of missing value percentages for relevant grades within a particular school level in the dataset of public schools.</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
