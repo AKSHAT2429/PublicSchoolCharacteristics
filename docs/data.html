@@ -205,8 +205,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="description" class="level2" data-number="2.1">
 <h2 data-number="2.1" class="anchored" data-anchor-id="description"><span class="header-section-number">2.1</span> Description</h2>
 <p>Annually, the National Center for Education Statistics (NCES) through its Education Demographic and Geographic Estimate (EDGE) program updates the geographical coordinates (latitude and longitude) of public elementary and secondary schools within the NCES Common Core of Data (CCD). The CCD program gathers administrative and fiscal data from state education agencies about public schools, school districts, and state education offices across the United States. These statistics, sourced from state education agency representatives, encompass essential contact information, directory details for schools and districts, student body composition, instructor numbers, grades taught, and other administrative particulars. The provided physical locations of schools and administrative offices are instrumental in determining the precise point locations for CCD schools and agencies.</p>
-<p>Data Link: https://nces.maps.arcgis.com/home/item.html?id=e3cbd4087f144ec5ac3b31094ec84199&amp;sortOrder=desc&amp;sortField=defaultFSOrder#overviewLinks to an external site.</p>
-<p>Download Link: https://data-nces.opendata.arcgis.com/datasets/e3cbd4087f144ec5ac3b31094ec84199/exploreLinks to an external site.</p>
+<p>Data Link: https://nces.maps.arcgis.com/home/item.html?id=e3cbd4087f144ec5ac3b31094ec84199&amp;sortOrder=desc&amp;sortField=defaultFSOrder#overview</p>
+<p>Download Link: https://data-nces.opendata.arcgis.com/datasets/e3cbd4087f144ec5ac3b31094ec84199/explore</p>
 <p>Data Format: The dataset is provided in a tabular format.</p>
 <p>Dimensions: 100722 rows and 77 features</p>
 <p>Field Types: The field types included in the data are String, Integer and latitude and longitude are represented as double.</p>
@@ -290,8 +290,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_tile</span>() <span class="sc">+</span></span>
 <span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_gradient</span>() <span class="sc">+</span></span>
 <span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Heatmap of Missing Values per Columns per Category"</span>,</span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Category"</span>,</span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Columns"</span>) <span class="sc">+</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"School Levels"</span>,</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Grades"</span>) <span class="sc">+</span></span>
 <span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()<span class="sc">+</span></span>
 <span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
