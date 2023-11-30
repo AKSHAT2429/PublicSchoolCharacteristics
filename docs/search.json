@@ -11,7 +11,7 @@
     "href": "data.html#description",
     "title": "2  Data",
     "section": "2.1 Description",
-    "text": "2.1 Description"
+    "text": "2.1 Description\nAnnually, the National Center for Education Statistics (NCES) through its Education Demographic and Geographic Estimate (EDGE) program updates the geographical coordinates (latitude and longitude) of public elementary and secondary schools within the NCES Common Core of Data (CCD). The CCD program gathers administrative and fiscal data from state education agencies about public schools, school districts, and state education offices across the United States. These statistics, sourced from state education agency representatives, encompass essential contact information, directory details for schools and districts, student body composition, instructor numbers, grades taught, and other administrative particulars. The provided physical locations of schools and administrative offices are instrumental in determining the precise point locations for CCD schools and agencies.\nData Link: https://nces.maps.arcgis.com/home/item.html?id=e3cbd4087f144ec5ac3b31094ec84199&sortOrder=desc&sortField=defaultFSOrder#overviewLinks to an external site.\nDownload Link: https://data-nces.opendata.arcgis.com/datasets/e3cbd4087f144ec5ac3b31094ec84199/exploreLinks to an external site.\nData Format: The dataset is provided in a tabular format.\nDimensions: 100722 rows and 77 features\nField Types: The field types included in the data are String, Integer and latitude and longitude are represented as double."
   },
   {
     "objectID": "data.html#research-plan",
