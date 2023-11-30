@@ -42,8 +42,11 @@ These factors can be combined and analysed to answer the research questions give
 
 In our analysis, we are specifically examining missing values in the "total" column, which signifies the total number of students enrolled in each school. This column holds significant importance because the absence of total student numbers for a school renders the analysis of student figures across different races meaningless. Thus, our initial focus is on analyzing the percentage of missing values for total student counts in each state.
 
-```{r r setup, include=FALSE}
+```{r setup, include=FALSE}
 knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+```
+
+```{r}
 library(openintro)
 library(dplyr)
 library(tidyr)
@@ -51,6 +54,7 @@ library(tibble)
 library(ggplot2)
 library(choroplethr)
 library(scales)
+
 ```
 
 
