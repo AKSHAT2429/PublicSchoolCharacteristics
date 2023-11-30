@@ -26,3 +26,61 @@ We can go into more detail about how each of these factors helps to answer the s
 These factors can be combined and analysed to answer the research questions given in the introduction. Finding trends, relationships, and disparities pertaining to geography, race, and educational equity can be accomplished through the use of statistical modelling, spatial analysis, and data visualisation approaches. A thorough investigation of the intricacies of the US public education system can be supported by the dataset's rich information on student demographics, school features, and geographic location.
 
 ## Missing value analysis
+
+```{r r setup, include=FALSE}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+library(openintro)
+library(dplyr)
+library(tidyr)
+library(tibble)
+library(ggplot2)
+library(choroplethr)
+library(scales)
+```
+
+```{r}
+data = read.csv("Data/Public_School_Characteristics_2020-21.csv")
+
+missing_state <- data %>% 
+    group_by(LSTATE) %>% 
+    summarise(sum_na = round(mean(is.na(TOTAL)),4)*100)
+
+missing_state <- missing_state %>% 
+                  transmute(region = tolower(usdata::abbr2state(LSTATE)), 
+                            value = sum_na)
+
+state_choropleth(missing_state %>% drop_na(),
+                 title = "Percentage of missing values for total students by State",
+                 legend = "Percentage")
+```
+
+```{r}
+data1 = data %>% drop_na(TOTAL)
+
+data1 <- data1 %>% select(23,34:50)
+
+missing_counts <- data1 %>%
+  group_by(SCHOOL_LEVEL) %>%
+  summarize(across(-starts_with("SCHOOL"), ~mean(is.na(.))*100, .names = "{col}"))
+
+missing_counts_long <- pivot_longer(missing_counts, cols = -starts_with("SCHOOL"), names_to = "Grades", values_to = "MissingCountPercent")
+
+custom_grades <- c("PK","KG","G01","G02","G03","G04","G05","G06","G07","G08","G09","G10","G11","G12","G13","UG","AE")
+
+custom_SCHOOL_LEVEL <- c("Prekindergarten","Elementary","Middle","Secondary","High","Ungraded","Adult Education","Not Applicable","Other")
+
+missing_counts_long$Grades <- factor(missing_counts_long$Grades, levels = custom_grades)
+missing_counts_long$SCHOOL_LEVEL <- factor(missing_counts_long$SCHOOL_LEVEL, levels = custom_SCHOOL_LEVEL)
+
+# Create a heatmap
+ggplot(missing_counts_long, aes(x = SCHOOL_LEVEL, y = Grades, fill = MissingCountPercent))+
+  geom_tile() +
+  scale_fill_gradient() +
+  labs(title = "Heatmap of Missing Values per Columns per Category",
+       x = "Category",
+       y = "Columns") +
+  theme_minimal()+
+  theme(axis.text.x = element_text(angle = 90))
+
+```
+
