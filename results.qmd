@@ -281,23 +281,44 @@ reshaped_df <- sums_df %>%
   pivot_longer(cols = everything(), names_to = c("Race", ".value"), names_pattern = "(..)(...)")
 
 reshaped_df <- tidyr::gather(reshaped_df, key = "Gender", value = "Value", -Race)
+reshaped_df$Gender[reshaped_df$Gender == "ALM"] <- "Male"
+reshaped_df$Gender[reshaped_df$Gender == "ALF"] <- "Female"
+
+custom_order_r <- c("WH","HI","BL","AS","TR","AM","HP")
+
+reshaped_df$Race <- factor(reshaped_df$Race, custom_order_r)
+
+custom_labels <- c("White","Hispanic","African American","Asian","Two or More races","American Indian","Native Hawaian")
 
 ggplot(reshaped_df, aes(x = Race, y = Value, fill = Gender)) +
   geom_bar(stat = "identity", position = "dodge") +
-  labs(title = "Grouped Bar Chart",
+  labs(title = "Male & Female Enrollment across every race",
        x = "Race",
        y = "Enrollment") +
-  scale_fill_manual(values = c("ALF" = "pink", "ALM" = "blue")) +
-  theme_minimal()
+  scale_fill_manual(values = c("Female" = "pink", "Male" = "blue")) +
+  theme(
+    plot.title = element_text(hjust = 0.5),
+    axis.text.x = element_text(angle = 45, hjust = 1)
+    )+
+  scale_x_discrete(labels = custom_labels)
+
 ```
 
 
 ```{r}
 data_r <- select(data1,c("LSTATE","AM","AS","BL","HP","HI","WH"))
 
+colnames(data_r)[which(names(data_r) == "AM")] <- "American Indian"
+colnames(data_r)[which(names(data_r) == "AS")] <- "Asian"
+colnames(data_r)[which(names(data_r) == "BL")] <- "African American"
+colnames(data_r)[which(names(data_r) == "HP")] <- "Native Hawaian"
+colnames(data_r)[which(names(data_r) == "HI")] <- "Hispanic"
+colnames(data_r)[which(names(data_r) == "WH")] <- "White"
+
+
 result_r <- data_r %>%
   group_by(LSTATE) %>%
-  mutate(across(everything(), ~sum(.,na.rm = TRUE))) %>%
+  mutate(across(everything(), ~mean(.,na.rm = TRUE))) %>%
   distinct()
 
 parcoords(
@@ -309,13 +330,20 @@ parcoords(
 
 ```{r}
 data_n <- select(data1,c("ULOCALE","AM","AS","BL","HP","HI","WH"))
+colnames(data_n)[which(names(data_n) == "AM")] <- "American Indian"
+colnames(data_n)[which(names(data_n) == "AS")] <- "Asian"
+colnames(data_n)[which(names(data_n) == "BL")] <- "African American"
+colnames(data_n)[which(names(data_n) == "HP")] <- "Native Hawaian"
+colnames(data_n)[which(names(data_n) == "HI")] <- "Hispanic"
+colnames(data_n)[which(names(data_n) == "WH")] <- "White"
+
 
 result_n <- data_n %>%
   group_by(ULOCALE) %>%
   mutate(across(everything(), ~sum(.,na.rm = TRUE))) %>%
   distinct()
 
-result_n <- pivot_longer(result_n, cols = c("AM","AS","BL","HP","HI","WH"), names_to = "Race", values_to = "Enrollment")
+result_n <- pivot_longer(result_n, cols = c("American Indian","Asian","African American","Native Hawaian","Hispanic","White"), names_to = "Race", values_to = "Enrollment")
 
 ggplot(result_n, aes(x = ULOCALE, y = Enrollment, fill = Race)) +
   geom_bar(stat = "identity", position = "dodge") +
@@ -323,7 +351,7 @@ ggplot(result_n, aes(x = ULOCALE, y = Enrollment, fill = Race)) +
   labs(title = "Enrollment by Race and Locality",
        x = "Locality",
        y = "Enrollment") +
-  theme_minimal()
+  theme(plot.title = element_text(hjust = 0.5))
 
 ```
 
