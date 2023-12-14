@@ -1,1 +1,265 @@
 # Results
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+```
+
+```{r}
+library(openintro)
+library(dplyr)
+library(tidyr)
+library(tibble)
+library(ggplot2)
+library(choroplethr)
+library(scales)
+
+```
+
+
+```{r}
+data = read.csv("Data/Public_School_Characteristics_2020-21.csv")
+
+```
+
+
+```{r}
+data1 = data %>% drop_na(TOTAL)
+data1 <- data1 %>%
+  mutate(ULOCALE = sub(".*(Town|City|Rural|Suburb).*","\\1", ULOCALE,ignore.case = TRUE))
+```
+
+
+```{r}
+# Assuming your_data is your data frame
+```
+
+
+```{r}
+library(ggplot2)
+
+# Sum the instances across school levels
+data_summarized <- data1 %>%
+  group_by(VIRTUAL, SCHOOL_LEVEL) %>%
+  summarise(count = n())
+
+# Plotting
+ggplot(data_summarized, aes(x = SCHOOL_LEVEL, y = count, fill = VIRTUAL)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  labs(title = "Grouped Bar Plot",
+       x = "School Level",
+       y = "Count") +
+  theme_minimal()
+```
+
+
+```{r}
+
+library(ggplot2)
+data_filtered <- data1 %>%
+  filter(VIRTUAL != "M")
+
+# Sum the instances across school levels
+data_summarized <- data_filtered %>%
+  group_by(VIRTUAL, SCHOOL_LEVEL) %>%
+  summarise(count = n())
+
+# Plotting with facet_wrap
+ggplot(data_summarized, aes(x = VIRTUAL, y = count, fill = VIRTUAL)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  labs(title = "Grouped Bar Plot",
+       x = "Virtual Category",
+       y = "Count") +
+  theme_minimal() +
+  facet_wrap(~SCHOOL_LEVEL, scales = "free_y")
+
+```
+
+
+```{r}
+library(ggplot2)
+data_filtered <- data1 %>%
+  filter(TITLEI != "M", !(SCHOOL_LEVEL %in% c("Not Applicable", "Other", "Ungraded")))
+
+# Sum the instances across school levels
+data_summarized <- data_filtered %>%
+  group_by(TITLEI, SCHOOL_LEVEL) %>%
+  summarise(count = n())
+
+custom_order <- c("Prekindergarten", "Elementary", "Middle", "Secondary","High", "Adult Education")
+
+data_summarized$SCHOOL_LEVEL <- factor(data_summarized$SCHOOL_LEVEL, levels = custom_order)
+
+# Plotting with facet_wrap
+ggplot(data_summarized, aes(x = TITLEI, y = count, fill = TITLEI)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  labs(title = "Grouped Bar Plot",
+       x = "Virtual Category",
+       y = "Count") +
+  theme_minimal() +
+  facet_wrap(~SCHOOL_LEVEL, scales = "free_y")
+```
+```{r}
+library(ggplot2)
+
+# Assuming your data frame is named 'your_data'
+# Adjust the column names accordingly
+
+# Bin the student-teacher ratio into 10% bins
+your_data <- data1 %>%
+  mutate(Student_Teacher_Ratio_Bin = cut(STUTERATIO, breaks = seq(0, 100, 10), include.lowest = TRUE))
+
+# Sum the total enrollment across schools for each bin
+data_summarized <- your_data %>%
+  group_by(Student_Teacher_Ratio_Bin) %>%
+  summarise(TOTAL = sum(TOTAL, na.rm = TRUE))
+
+data_summarized <- data_summarized[complete.cases(data_summarized), ]
+
+# Plotting a bar plot
+ggplot(data_summarized, aes(x = Student_Teacher_Ratio_Bin, y = TOTAL)) +
+  geom_bar(stat = "identity", fill = "skyblue") +
+  labs(title = "Total Enrollment Across Student-Teacher Ratio Bins",
+       x = "Student-Teacher Ratio Bin",
+       y = "Total Enrollment") +
+  theme_minimal()
+
+```
+```{r}
+library(tidyverse)
+library(usdata)
+
+# Calculate the average student-teacher ratio by state
+avg_ratio_by_state <- data %>%
+  group_by(LSTATE) %>%
+  summarise(avg_ratio = mean(STUTERATIO, na.rm = TRUE))
+
+avg_ratio_by_state <- avg_ratio_by_state %>%
+  transmute(region = tolower(usdata::abbr2state(LSTATE)),
+            value = avg_ratio)
+
+# Check for duplicate entries
+duplicates <- avg_ratio_by_state %>% filter(duplicated(region) | duplicated(region, fromLast = TRUE))
+if (nrow(duplicates) > 0) {
+  message("Duplicate entries found. Removing duplicates.")
+  avg_ratio_by_state <- avg_ratio_by_state[!duplicated(avg_ratio_by_state$region), ]
+}
+
+# Plotting the choropleth
+state_choropleth(avg_ratio_by_state,
+                 title = "Average Student-Teacher Ratio by State",
+                 legend = "Ratio")
+
+```
+```{r}
+library(ggplot2)
+data_filtered <- data1 %>%
+  filter(TITLEI != "M", !(SCHOOL_LEVEL %in% c("Not Applicable", "Other", "Ungraded")))
+
+# Sum the instances across school levels
+data_summarized <- data_filtered %>%
+  group_by(SCHOOL_LEVEL, ULOCALE) %>%
+  summarise(count = n())
+
+# Plotting with facet_wrap
+ggplot(data_summarized, aes(x = SCHOOL_LEVEL, y = count, fill = SCHOOL_LEVEL)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  labs(title = "Grouped Bar Plot",
+       x = "Virtual Category",
+       y = "Count") +
+  theme_minimal() +
+  facet_wrap(~ULOCALE, scales = "free_y")
+```
+
+```{r}
+library(tidyverse)
+library(usdata)
+
+# Calculate the average student-teacher ratio by state
+avg_ratio_by_state <- data %>%
+  group_by(LSTATE) %>%
+  summarise(avg_ratio = mean(TOTAL, na.rm = TRUE))
+
+avg_ratio_by_state <- avg_ratio_by_state %>%
+  transmute(region = tolower(usdata::abbr2state(LSTATE)),
+            value = avg_ratio)
+
+# Check for duplicate entries
+duplicates <- avg_ratio_by_state %>% filter(duplicated(region) | duplicated(region, fromLast = TRUE))
+if (nrow(duplicates) > 0) {
+  message("Duplicate entries found. Removing duplicates.")
+  avg_ratio_by_state <- avg_ratio_by_state[!duplicated(avg_ratio_by_state$region), ]
+}
+
+# Plotting the choropleth
+state_choropleth(avg_ratio_by_state,
+                 title = "Total Enrolment by State",
+                 legend = "Ratio")
+```
+```{r}
+library(tidyverse)
+library(usdata)
+
+# Calculate the percentage of "Yes" in the "Title" column by state
+percentage_yes_by_state <- data1 %>%
+  group_by(LSTATE) %>%
+  summarise(percentage_yes = mean(TITLEI == "1-Yes", na.rm = TRUE) * 100)
+
+percentage_yes_by_state <- percentage_yes_by_state %>%
+  transmute(region = tolower(usdata::abbr2state(LSTATE)),
+            value = percentage_yes)
+
+# Check for duplicate entries
+duplicates <- percentage_yes_by_state %>% filter(duplicated(region) | duplicated(region, fromLast = TRUE))
+if (nrow(duplicates) > 0) {
+  message("Duplicate entries found. Removing duplicates.")
+  percentage_yes_by_state <- percentage_yes_by_state[!duplicated(percentage_yes_by_state$region), ]
+}
+
+# Plotting the choropleth
+state_choropleth(percentage_yes_by_state,
+                 title = "Percentage of 'Yes' Title by State",
+                 legend = "Percentage")
+
+```
+
+```{r}
+data_filtered <- data %>%
+  filter(!is.na(STUTERATIO),STUTERATIO != -1, !is.na(SCHOOL_LEVEL), !(SCHOOL_LEVEL %in% c("Not Applicable", "Other", "Ungraded","Adult Education")))
+
+# Calculate the average student-teacher ratio by school type
+avg_ratio_by_type <- data_filtered %>%
+  group_by(SCHOOL_LEVEL) %>%
+  summarise(avg_ratio = mean(STUTERATIO))
+
+# Plotting the bar plot
+ggplot(avg_ratio_by_type, aes(x = SCHOOL_LEVEL, y = avg_ratio, fill = SCHOOL_LEVEL)) +
+  geom_bar(stat = "identity") +
+  labs(title = "Average Student-Teacher Ratio by School Type",
+       x = "School Type",
+       y = "Average Student-Teacher Ratio") +
+  theme_minimal()
+```
+```{r}
+library(ggalluvial)
+
+# Assuming your data frame is named 'data'
+# Adjust the column names accordingly
+sampled_data <- data1 %>%
+  sample_n(10000, replace = FALSE)
+# Filter out rows with missing values
+data_filtered <- sampled_data %>%
+  filter(!is.na(ULOCALE), !is.na(SCHOOL_LEVEL), !is.na(SCHOOL_TYPE_TEXT))
+
+# Create an alluvial diagram
+alluvial_plot <- ggplot(data_filtered,
+                        aes(axis1 = ULOCALE, axis2 = SCHOOL_LEVEL, axis3 = TITLEI, axis4 = VIRTUAL, y = TOTAL)) +
+  geom_alluvium(aes(fill = ULOCALE)) +
+  geom_stratum() +
+  geom_text(stat = "stratum", aes(label = after_stat(stratum))) +
+  theme_minimal()
+
+# Print the alluvial diagram
+print(alluvial_plot)
+```
+
