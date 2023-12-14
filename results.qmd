@@ -28,7 +28,8 @@ data = read.csv("Data/Public_School_Characteristics_2020-21.csv")
 ```{r}
 data1 = data %>% drop_na(TOTAL)
 data1 <- data1 %>%
-  mutate(ULOCALE = sub(".*(Town|City|Rural|Suburb).*","\\1", ULOCALE,ignore.case = TRUE))
+  mutate(ULOCALE = sub(".*(Town|City|Rural|Suburb).*","\\1", ULOCALE,ignore.case = TRUE)) %>%
+  mutate(TITLEI = sub(".*(Yes|No).*","\\1", TITLEI,ignore.case = TRUE))
 ```
 
 
@@ -38,69 +39,58 @@ data1 <- data1 %>%
 
 
 ```{r}
-library(ggplot2)
-
-# Sum the instances across school levels
-data_summarized <- data1 %>%
-  group_by(VIRTUAL, SCHOOL_LEVEL) %>%
-  summarise(count = n())
-
-# Plotting
-ggplot(data_summarized, aes(x = SCHOOL_LEVEL, y = count, fill = VIRTUAL)) +
-  geom_bar(stat = "identity", position = "dodge") +
-  labs(title = "Grouped Bar Plot",
-       x = "School Level",
-       y = "Count") +
-  theme_minimal()
-```
-
-
-```{r}
 
 library(ggplot2)
 data_filtered <- data1 %>%
-  filter(VIRTUAL != "M")
+  filter(VIRTUAL != "M", !(SCHOOL_LEVEL %in% c("Not Applicable", "Other")))
 
 # Sum the instances across school levels
 data_summarized <- data_filtered %>%
   group_by(VIRTUAL, SCHOOL_LEVEL) %>%
   summarise(count = n())
+custom_order <- c("Prekindergarten", "Elementary", "Middle", "Secondary","High", "Adult Education", "Ungraded")
+data_summarized$SCHOOL_LEVEL <- factor(data_summarized$SCHOOL_LEVEL, levels = custom_order)
 
 # Plotting with facet_wrap
-ggplot(data_summarized, aes(x = VIRTUAL, y = count, fill = VIRTUAL)) +
+ggplot(data_summarized, aes(x = reorder(VIRTUAL, -count), y = count, fill = VIRTUAL)) +
   geom_bar(stat = "identity", position = "dodge") +
-  labs(title = "Grouped Bar Plot",
-       x = "Virtual Category",
-       y = "Count") +
+  labs(title = "Mode of Education across different School Levels",
+       x = "Mode of Education",
+       y = "Number of Students",
+       fill = "Mode of Education") +
   theme_minimal() +
-  facet_wrap(~SCHOOL_LEVEL, scales = "free_y")
-
+  facet_wrap(~SCHOOL_LEVEL, scales = "free_y") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ```
 
 
 ```{r}
 library(ggplot2)
 data_filtered <- data1 %>%
-  filter(TITLEI != "M", !(SCHOOL_LEVEL %in% c("Not Applicable", "Other", "Ungraded")))
+  filter(TITLEI != "M", !(SCHOOL_LEVEL %in% c("Not Applicable", "Other")))
 
 # Sum the instances across school levels
 data_summarized <- data_filtered %>%
   group_by(TITLEI, SCHOOL_LEVEL) %>%
   summarise(count = n())
 
-custom_order <- c("Prekindergarten", "Elementary", "Middle", "Secondary","High", "Adult Education")
+custom_order <- c("Prekindergarten", "Elementary", "Middle", "Secondary","High", "Adult Education", "Ungraded")
 
 data_summarized$SCHOOL_LEVEL <- factor(data_summarized$SCHOOL_LEVEL, levels = custom_order)
 
 # Plotting with facet_wrap
-ggplot(data_summarized, aes(x = TITLEI, y = count, fill = TITLEI)) +
+ggplot(data_summarized, aes(x = reorder(TITLEI, -count), y = count, fill = TITLEI)) +
   geom_bar(stat = "identity", position = "dodge") +
-  labs(title = "Grouped Bar Plot",
-       x = "Virtual Category",
-       y = "Count") +
+  labs(title = "TITLE I Entitlement Status across different School Levels",
+       x = "TITLE I Entitlement Status",
+       y = "Number of Students",
+       fill = "TITLE I Entitlement Status") +
   theme_minimal() +
   facet_wrap(~SCHOOL_LEVEL, scales = "free_y")
 ```
+
+
+
 ```{r}
 library(ggplot2)
 
@@ -164,13 +154,15 @@ data_summarized <- data_filtered %>%
   summarise(count = n())
 
 # Plotting with facet_wrap
-ggplot(data_summarized, aes(x = SCHOOL_LEVEL, y = count, fill = SCHOOL_LEVEL)) +
+ggplot(data_summarized, aes(x = reorder(SCHOOL_LEVEL, -count), y = count, fill = SCHOOL_LEVEL)) +
   geom_bar(stat = "identity", position = "dodge") +
-  labs(title = "Grouped Bar Plot",
-       x = "Virtual Category",
-       y = "Count") +
+  labs(title = "Grouped Bar Plot for number of student enrolled in different school levels faceted across different types of locality",
+       x = "School Level",
+       y = "Number of Students Enrolled",
+       fill = "School Level") +
   theme_minimal() +
-  facet_wrap(~ULOCALE, scales = "free_y")
+  facet_wrap(~ULOCALE, scales = "free_y") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ```
 
 ```{r}
@@ -195,8 +187,8 @@ if (nrow(duplicates) > 0) {
 
 # Plotting the choropleth
 state_choropleth(avg_ratio_by_state,
-                 title = "Total Enrolment by State",
-                 legend = "Ratio")
+                 title = "Average Total Enrolment across each State",
+                 legend = "Total Enrollment")
 ```
 ```{r}
 library(tidyverse)
@@ -205,7 +197,7 @@ library(usdata)
 # Calculate the percentage of "Yes" in the "Title" column by state
 percentage_yes_by_state <- data1 %>%
   group_by(LSTATE) %>%
-  summarise(percentage_yes = mean(TITLEI == "1-Yes", na.rm = TRUE) * 100)
+  summarise(percentage_yes = mean(TITLEI == "Yes", na.rm = TRUE) * 100)
 
 percentage_yes_by_state <- percentage_yes_by_state %>%
   transmute(region = tolower(usdata::abbr2state(LSTATE)),
@@ -220,27 +212,33 @@ if (nrow(duplicates) > 0) {
 
 # Plotting the choropleth
 state_choropleth(percentage_yes_by_state,
-                 title = "Percentage of 'Yes' Title by State",
+                 title = "Percentage of Title I entitled schools by State",
                  legend = "Percentage")
 
 ```
 
 ```{r}
 data_filtered <- data %>%
-  filter(!is.na(STUTERATIO),STUTERATIO != -1, !is.na(SCHOOL_LEVEL), !(SCHOOL_LEVEL %in% c("Not Applicable", "Other", "Ungraded","Adult Education")))
+  filter(!is.na(STUTERATIO),STUTERATIO != -1, !is.na(SCHOOL_LEVEL), !(SCHOOL_LEVEL %in% c("Not Applicable", "Other", "Not Reported")))
 
 # Calculate the average student-teacher ratio by school type
 avg_ratio_by_type <- data_filtered %>%
   group_by(SCHOOL_LEVEL) %>%
   summarise(avg_ratio = mean(STUTERATIO))
 
+custom_order <- c("Prekindergarten", "Elementary", "Middle", "Secondary","High", "Adult Education", "Ungraded")
+
+avg_ratio_by_type$SCHOOL_LEVEL <- factor(avg_ratio_by_type$SCHOOL_LEVEL, levels = custom_order)
+
 # Plotting the bar plot
 ggplot(avg_ratio_by_type, aes(x = SCHOOL_LEVEL, y = avg_ratio, fill = SCHOOL_LEVEL)) +
   geom_bar(stat = "identity") +
   labs(title = "Average Student-Teacher Ratio by School Type",
-       x = "School Type",
-       y = "Average Student-Teacher Ratio") +
-  theme_minimal()
+       x = "School Level",
+       y = "Average Student-Teacher Ratio",
+       fill = "School Level") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ```
 ```{r}
 library(ggalluvial)
@@ -248,7 +246,8 @@ library(ggalluvial)
 # Assuming your data frame is named 'data'
 # Adjust the column names accordingly
 sampled_data <- data1 %>%
-  sample_n(10000, replace = FALSE)
+  sample_n(100, replace = FALSE) %>%
+  filter(!is.na(STUTERATIO),STUTERATIO != -1, !is.na(SCHOOL_LEVEL), !(SCHOOL_LEVEL %in% c("Not Applicable", "Other", "Not Reported")), !(TITLEI %in% c("M")), !(VIRTUAL %in% c("M")))
 # Filter out rows with missing values
 data_filtered <- sampled_data %>%
   filter(!is.na(ULOCALE), !is.na(SCHOOL_LEVEL), !is.na(SCHOOL_TYPE_TEXT))
@@ -258,6 +257,10 @@ alluvial_plot <- ggplot(data_filtered,
                         aes(axis1 = ULOCALE, axis2 = SCHOOL_LEVEL, axis3 = TITLEI, axis4 = VIRTUAL, y = TOTAL)) +
   geom_alluvium(aes(fill = ULOCALE)) +
   geom_stratum() +
+  labs(title = "Average Student-Teacher Ratio by School Type",
+       axis1 = "Type of Locality", axis2 = "School Level", axis3 = "TITLE I Entitlement", axis4 = "Mode of Education",
+       y = "Average Student-Teacher Ratio",
+       fill = "Locality Type") +
   geom_text(stat = "stratum", aes(label = after_stat(stratum))) +
   theme_minimal()
 
