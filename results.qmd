@@ -15,17 +15,11 @@ library(choroplethr)
 library(scales)
 library(parcoords)
 library(ggplot2)
-
 ```
 
 
 ```{r}
 data = read.csv("Data/Public_School_Characteristics_2020-21.csv")
-
-```
-
-
-```{r}
 data1 = data %>% drop_na(TOTAL)
 data1 <- data1 %>%
   mutate(ULOCALE = sub(".*(Town|City|Rural|Suburb).*","\\1", ULOCALE,ignore.case = TRUE)) %>%
@@ -33,25 +27,61 @@ data1 <- data1 %>%
 ```
 
 
+### Mode of Education across different School Levels
+
+#### Inferences:
+
+1. **In-Person Education Dominance:**
+   - Across all school levels, in-person education remains the dominant mode, reflecting a widespread preference for traditional classroom settings.
+
+2. **Limited Virtual Integration in Early Education:**
+   - In prekindergarten and elementary levels, the virtual presence is minimal, emphasizing the continued reliance on face-to-face interactions for foundational education.
+
+3. **Gradual Increase in Virtual Options:**
+   - As students progress to higher levels, there is a gradual increase in virtual learning options, indicating a potential shift towards integrating technology more prominently in secondary and high school education.
+
+4. **Flexibility in Adult Education:**
+   - Adult education stands out for its adaptability, with a more even distribution among different modes. This suggests that adult learners may benefit from a variety of educational formats.
+
+5. **Hybrid Experimentation:**
+   - The consistent presence of the 'Virtual with face-to-face options' category suggests an ongoing experimentation with hybrid models, blending traditional and virtual elements across various education levels.
+
+6. **Supplemental Virtual Challenges:**
+   - The consistently low enrollment in supplemental virtual learning suggests a potential challenge in effectively incorporating virtual tools as supplementary resources. This could be an area for further exploration and improvement.
+
+#### Suggestions for Improvement:
+
+1. **Enhance Virtual Learning Infrastructure:**
+   - Invest in technology infrastructure and training to facilitate a smoother transition to virtual learning, ensuring that schools are well-equipped to provide quality education in both in-person and virtual settings.
+
+2. **Early Education Virtual Integration:**
+   - Explore strategies to integrate virtual elements into early education, recognizing the importance of building foundational digital literacy skills from a young age.
+
+3. **Address Hybrid Model Challenges:**
+   - Investigate challenges associated with hybrid models, such as ensuring equitable access to resources and maintaining engagement. Develop support systems for educators to effectively navigate hybrid teaching environments.
+
+4. **Promote Adult Education Flexibility:**
+   - Capitalize on the adaptability observed in adult education by offering a diverse range of learning options. Consider expanding virtual, in-person, and hybrid courses to cater to the diverse needs of adult learners.
+
+5. **Evaluate Supplemental Virtual Effectiveness:**
+   - Conduct a thorough evaluation of the effectiveness of supplemental virtual learning. Identify barriers to enrollment and assess the impact of these programs on student outcomes to make informed improvements.
+
+6. **Contextual Data Collection:**
+   - Provide additional context to the data, including the geographical region and time period. This will enable a more nuanced understanding of the educational landscape and inform targeted interventions.
+
+Implementing these suggestions can contribute to a more flexible and responsive education system that embraces the benefits of both traditional and virtual learning, ensuring an inclusive and effective educational experience for students across all levels.
+
 ```{r}
-# Assuming your_data is your data frame
-```
-
-
-```{r}
-
 library(ggplot2)
 data_filtered <- data1 %>%
   filter(VIRTUAL != "M", !(SCHOOL_LEVEL %in% c("Not Applicable", "Other")))
 
-# Sum the instances across school levels
 data_summarized <- data_filtered %>%
   group_by(VIRTUAL, SCHOOL_LEVEL) %>%
   summarise(count = n())
 custom_order <- c("Prekindergarten", "Elementary", "Middle", "Secondary","High", "Adult Education", "Ungraded")
 data_summarized$SCHOOL_LEVEL <- factor(data_summarized$SCHOOL_LEVEL, levels = custom_order)
 
-# Plotting with facet_wrap
 ggplot(data_summarized, aes(x = reorder(VIRTUAL, -count), y = count, fill = VIRTUAL)) +
   geom_bar(stat = "identity", position = "dodge") +
   labs(title = "Mode of Education across different School Levels",
@@ -62,6 +92,47 @@ ggplot(data_summarized, aes(x = reorder(VIRTUAL, -count), y = count, fill = VIRT
   facet_wrap(~SCHOOL_LEVEL, scales = "free_y") +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ```
+### In-depth Analysis of Student Distribution by Title I Entitlement and School Level:
+
+#### Key Inferences:
+
+1. **Elementary Education Priority**:
+   - Elementary schools consistently have the highest enrollment, indicating their foundational importance. The prevalence of students with Title I entitlement suggests a targeted effort to support socio-economically disadvantaged students at this level.
+
+2. **Transition Dynamics in Secondary Education**:
+   - Secondary and high schools show significant enrollments, but there's a noticeable decrease in the proportion of students with Title I entitlement. This points to a potential shift in socio-economic dynamics as students progress to higher education levels.
+
+3. **Contrast between Prekindergarten and Adult Education**:
+   - Prekindergarten has a relatively high number of students with Title I entitlement, emphasizing early intervention. Conversely, adult education has the lowest enrollment, reflecting limited access or demand for Title I support in this category.
+
+4. **Balanced Demographics in Middle School**:
+   - Middle schools exhibit a balanced distribution between students with and without Title I entitlement, indicating a more even socio-economic demographic at this school level.
+
+5. **Significance of the "Ungraded" Category**:
+   - The "Ungraded" category stands out with an overwhelming number of students without Title I entitlement. Further investigation into the characteristics and needs of this group is essential for targeted support and program development.
+
+6. **Title I Targeting Effectiveness**:
+   - Overall, fewer students across most levels have Title I entitlement, aligning with the program's targeted nature. This underscores the importance of these programs in assisting students with financial need.
+
+#### Suggestions Based on Inferences:
+
+1. **Targeted Support in Secondary Education**:
+   - Implement targeted support programs in secondary and high schools to address the decreasing proportion of students with Title I entitlement. This may involve understanding the specific needs of students at these levels.
+
+2. **Expansion of Early Intervention Programs**:
+   - Strengthen and expand early intervention programs in prekindergarten, emphasizing Title I support to provide a solid foundation for socio-economically disadvantaged students.
+
+3. **Enhanced Outreach in Adult Education**:
+   - Conduct outreach programs to increase awareness and accessibility of Title I support in adult education settings. This could involve collaboration with community organizations and employers.
+
+4. **Investigation into the "Ungraded" Category**:
+   - Conduct a detailed investigation into the characteristics and needs of the "Ungraded" category to tailor Title I programs to the unique circumstances of this student group.
+
+5. **Continuous Program Evaluation**:
+   - Regularly evaluate Title I programs to ensure they remain aligned with evolving socio-economic dynamics and educational needs across different school levels.
+
+These suggestions aim to enhance the effectiveness and inclusivity of Title I programs, addressing specific trends and dynamics observed in the distribution of students with and without Title I entitlement across various education levels.
+
 
 
 ```{r}
@@ -88,6 +159,51 @@ ggplot(data_summarized, aes(x = reorder(TITLEI, -count), y = count, fill = TITLE
   theme_minimal() +
   facet_wrap(~SCHOOL_LEVEL, scales = "free_y")
 ```
+
+### Analysis of Student-Teacher Ratio and Enrollment:
+
+#### Overview:
+- *Student-Teacher Ratio Bins*: The bins range from [0,10] to [90,100] with intervals of 10.
+- *Total Enrollment*: Vertical axis represents total student enrollment in increments of 1e+07 (10 million).
+
+#### Analysis:
+- *Most Common Ratio*: The [10,20] bin exhibits the highest total enrollment, significantly surpassing other bins, indicating that a substantial number of students are in settings with a student-teacher ratio between 10 and 20.
+- *Decreasing Enrollment with Higher Ratios*: There is a sharp decline in enrollment as the ratio increases. The [20,30] bin has less than half the enrollment of the [10,20] bin, suggesting that higher ratios are associated with lower enrollment.
+- *Lowest Ratios*: The [0,10] bin has notably low total enrollment compared to [10,20], indicating less prevalence of very small class sizes.
+- *Higher Ratios*: Enrollment continues to decrease with higher ratios, particularly beyond the [30,40] bin, indicating fewer students in settings where the ratio exceeds 30.
+
+#### Key Inferences:
+
+1. **Preferred Ratios**:
+   - The data strongly suggests a preference for student-teacher ratios within the [10,20] range, as evidenced by the significantly higher enrollment in this bin compared to others. Educational institutions might consider this range when planning class sizes.
+
+2. **Resource Allocation and Constraints**:
+   - The noticeable decrease in enrollment with higher ratios ([20,30] and beyond) implies resource constraints or a deliberate choice in resource allocation. Education policymakers should consider the balance between maintaining lower ratios and optimizing resource utilization.
+
+3. **Quality Implications**:
+   - The high enrollment in the [10,20] ratio range suggests a perceived or real quality advantage, given that lower ratios are often associated with better educational outcomes. Schools and policymakers may want to explore ways to maintain or achieve ratios within this range.
+
+4. **Policy and Funding Considerations**:
+   - The data hints at a potential alignment between educational policy and funding structures with a target student-teacher ratio, particularly in the [10,20] range. Policymakers may need to evaluate the effectiveness of these policies in achieving educational goals.
+
+#### Suggestions Based on Inferences:
+
+1. **Policy Review and Adjustment**:
+   - Evaluate existing educational policies related to student-teacher ratios and consider adjustments based on the observed preferences and potential quality implications. This may involve revisiting funding models to support lower ratios.
+
+2. **Resource Optimization Strategies**:
+   - Develop strategies for optimizing resource allocation to maintain lower student-teacher ratios, especially within the [10,20] range. This could involve targeted funding for schools facing challenges in achieving desired ratios.
+
+3. **Quality Assurance Measures**:
+   - Implement measures to ensure and communicate the quality of education within the preferred student-teacher ratio range. This can include teacher training, curriculum enhancements, and community engagement initiatives.
+
+4. **Long-Term Planning**:
+   - Consider the long-term implications of student-teacher ratios on educational outcomes and plan accordingly. This may involve forecasting enrollment trends, projecting resource needs, and adapting policies to evolving educational landscapes.
+
+5. **Data Transparency**:
+   - Enhance transparency by providing more context about the geographical scope and the timeframe of the data. This will enable stakeholders to interpret the findings more accurately and make informed decisions.
+
+These suggestions aim to guide educational policymakers and institutions in leveraging the inferences drawn from the data to enhance the overall effectiveness of educational programs and resource allocation.
 
 
 
@@ -117,6 +233,63 @@ ggplot(data_summarized, aes(x = Student_Teacher_Ratio_Bin, y = TOTAL)) +
   theme_minimal()
 
 ```
+### Analysis of Student-Teacher Ratios by State in the United States:
+
+#### Overview:
+- *Color Coding*: The map uses a blue gradient to represent student-teacher ratio ranges.
+- *Ratio Ranges*: Legend indicates ratios from [1.01 to 11.10] to [18.13 to 20.80].
+
+#### Analysis by Ratio Range:
+1. **[1.01 to 11.10]**: No state falls into this category, indicating an absence of extremely low student-teacher ratios.
+2. **[11.08 to 12.50]**: Some states, likely with lighter shades, suggest better-than-average ratios.
+3. **[12.53 to 13.50]**: Several states have ratios in this middle range, balancing student numbers and teacher availability.
+4. **[13.53 to 14.60]**: Fewer states fall into this category, possibly indicating slightly larger class sizes.
+5. **[14.59 to 15.80]**: Several states fall into this range, suggesting higher student-teacher ratios.
+6. **[15.83 to 18.10]**: States in this range likely experience larger class sizes, impacting individual attention.
+7. **[18.13 to 20.80]**: States with the darkest shades have the highest student-teacher ratios, potentially posing challenges in educational quality.
+
+#### State-Specific Observations:
+- *Lower Ratios*: States with lighter shades may prioritize education with more resources or policies favoring lower ratios.
+- *Higher Ratios*: Darker shades suggest states with larger class sizes, possibly due to budget constraints or higher population densities.
+
+#### Key Inferences:
+
+1. **Ratio Range Insights**:
+   - States predominantly fall into the [11.08 to 12.50] and [12.53 to 13.50] ratio ranges, suggesting a considerable number of states maintain moderate student-teacher ratios.
+   - The absence of states in the extremely low ratio range ([1.01 to 11.10]) may indicate a lack of states with exceptionally small class sizes.
+
+2. **Regional Variation**:
+   - Regional trends are apparent, with certain states in the middle ratio ranges and others in higher ranges. This could signify varying educational approaches or resource allocation strategies among different regions.
+
+3. **Educational Quality Implications**:
+   - States with lighter shades, representing lower ratios, may prioritize educational quality with more individualized attention for students. Conversely, states with darker shades may face challenges in providing the same level of individual attention.
+
+4. **Resource Allocation Patterns**:
+   - The map provides insights into how states allocate resources for education. States with lighter shades may have policies or funding structures supporting lower student-teacher ratios, while darker shades may indicate resource constraints.
+
+#### Suggestions Based on Inferences:
+
+1. **Benchmarking and Best Practices**:
+   - Facilitate benchmarking exercises between states with lighter shades (indicating lower ratios) to identify best practices in resource allocation and educational outcomes. This can inspire improvements in states with higher ratios.
+
+2. **Targeted Support for High Ratio States**:
+   - States with darker shades could benefit from targeted support programs, acknowledging the challenges posed by higher student-teacher ratios. This may involve revisiting budget allocations or implementing policies to enhance teacher recruitment.
+
+3. **Contextual Data Gathering**:
+   - Collect additional contextual data to understand the specific factors influencing student-teacher ratios in each state. This could involve investigating state policies, budget structures, and regional demographics.
+
+4. **Teacher Training and Development**:
+   - Implement training and development programs for teachers in states with higher ratios to enhance their effectiveness in managing larger class sizes.
+
+5. **Public Awareness Campaigns**:
+   - Launch public awareness campaigns to inform stakeholders about the importance of student-teacher ratios and the potential impact on educational quality. This could foster community support for policies promoting smaller class sizes.
+
+These suggestions aim to leverage the inferences drawn from the map, addressing specific challenges and enhancing the overall effectiveness of educational programs across diverse states and regions in the United States.
+
+
+
+
+
 ```{r}
 library(tidyverse)
 library(usdata)
@@ -143,6 +316,64 @@ state_choropleth(avg_ratio_by_state,
                  legend = "Ratio")
 
 ```
+### Analysis of Student Enrollment by Locality and School Level:
+
+#### Overview:
+- *Localities*: Data is segmented into City, Rural, Suburb, and Town.
+- *School Levels*: Six levels represented with distinct colors.
+
+#### Analysis by Locality:
+1. **City**:
+   - *Elementary* has the highest enrollment, typical for foundational education.
+   - *High* and *Secondary* levels show substantial enrollment, indicating a strong secondary education system.
+   - *Prekindergarten* and *Adult Education* have the lowest enrollment, suggesting lesser demand or availability in urban areas.
+
+2. **Rural**:
+   - *Elementary* enrollment is high but noticeably lower than in cities.
+   - *High* school enrollment drops significantly, possibly due to limited resources or student migration to larger areas.
+   - *Adult Education* is minimal, indicating fewer opportunities for continuing education in rural settings.
+
+3. **Suburb**:
+   - *Elementary* enrollment is high, reflecting family-centric demographics.
+   - *High* and *Secondary* levels have lower enrollments, following a general trend across all localities.
+   - *Prekindergarten* and *Adult Education* levels are the least populated, possibly due to demographic patterns or service availability.
+
+4. **Town**:
+   - *Elementary* has the highest enrollment at a smaller scale than cities and suburbs.
+   - *High* school shows moderate enrollments, significant for smaller communities.
+   - *Adult Education* has very low representation, suggesting less prevalence or prioritization in town settings.
+
+#### Key Inferences:
+
+1. **Elementary Education Priority**:
+   - Across all localities, elementary education consistently records the highest enrollment, underscoring its foundational importance in the educational landscape.
+
+2. **Urban vs Rural Enrollment Disparities**:
+   - Cities exhibit the highest enrollments across almost all levels, possibly influenced by higher population density and resource allocation. Understanding and addressing these urban-rural disparities could lead to more equitable educational opportunities.
+
+3. **Challenges in Adult Education**:
+   - Adult education shows minimal representation across all localities. This could be attributed to factors such as limited program availability, challenges in work-life balance, or a perceived lower value of continuing education in adulthood. Exploring strategies to enhance adult education accessibility and relevance may be beneficial.
+
+4. **Educational Progression Patterns**:
+   - The drop-off in enrollment from elementary to high and secondary levels suggests potential challenges like dropout rates, transitions to vocational training, or demographic shifts. Implementing targeted interventions to address these transition points could enhance educational continuity.
+
+#### Suggestions Based on Inferences:
+
+1. **Equity Initiatives**:
+   - Implement equity-focused initiatives to address enrollment disparities between urban and rural areas. This could involve targeted resource allocation, infrastructure development, or specialized programs tailored to the unique needs of each locality.
+
+2. **Promotion of Adult Education**:
+   - Develop awareness campaigns and flexible program structures to promote adult education across localities. Understanding the specific barriers to adult education enrollment and addressing them can enhance the overall educational landscape.
+
+3. **Transition Support Programs**:
+   - Introduce transition support programs to facilitate a smoother progression from elementary to high and secondary levels. Identifying and addressing the factors contributing to enrollment drop-offs can contribute to better educational outcomes.
+
+4. **Community Engagement**:
+   - Foster community engagement initiatives to understand and address the contextual factors influencing enrollment trends. Collaborative efforts involving educators, parents, and local community leaders can provide valuable insights and solutions.
+
+These suggestions aim to leverage the inferences drawn from the analysis, addressing specific challenges and enhancing the overall effectiveness of educational programs across diverse localities and school levels.
+
+
 ```{r}
 library(ggplot2)
 data_filtered <- data1 %>%
@@ -156,7 +387,7 @@ data_summarized <- data_filtered %>%
 # Plotting with facet_wrap
 ggplot(data_summarized, aes(x = reorder(SCHOOL_LEVEL, -count), y = count, fill = SCHOOL_LEVEL)) +
   geom_bar(stat = "identity", position = "dodge") +
-  labs(title = "Grouped Bar Plot for number of student enrolled in different school levels faceted across different types of locality",
+  labs(title = "Grouped Bar Plot for number of student enrolled in different school levels",
        x = "School Level",
        y = "Number of Students Enrolled",
        fill = "School Level") +
@@ -164,6 +395,62 @@ ggplot(data_summarized, aes(x = reorder(SCHOOL_LEVEL, -count), y = count, fill =
   facet_wrap(~ULOCALE, scales = "free_y") +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ```
+
+
+### Comprehensive Analysis of Average School Enrollment by State in the United States:
+
+#### Key Inferences:
+
+1. **Regional Enrollment Patterns**:
+   - Darker shades in the southern and northeastern states suggest higher average enrollments. This regional variation may be influenced by population density, state policies, and urbanization.
+
+2. **Lower Enrollments in Western States**:
+   - Lighter shades in the western states indicate smaller average enrollments, possibly reflecting lower population density or a higher number of schools relative to students.
+
+3. **Variation Among Neighboring States**:
+   - Notable enrollment variations between neighboring states imply diverse educational landscapes influenced by state-level factors. Understanding these variations can inform targeted interventions.
+
+4. **Highest Enrollment States**:
+   - States with the darkest shade, such as Texas and Florida, may require different educational resources and infrastructure planning due to their higher average enrollments.
+
+5. **Moderate Enrollments in the Midwest and East**:
+   - Moderate enrollments in many Midwest and East Coast states suggest a balance between school capacity and population distribution. This may inform resource allocation and infrastructure planning.
+
+6. **California's Enrollment**:
+   - Despite being the most populous state, California does not have the darkest shade, indicating a nuanced distribution of students across numerous schools. Policy considerations might involve optimizing resources across a higher number of schools.
+
+7. **Northeastern States**:
+   - Northeastern states generally exhibit moderate to low average enrollments, possibly due to a higher number of smaller schools or slower population growth. Tailored policies may be needed for these states.
+
+8. **Potential Data Anomalies**:
+   - Alaska and Hawaii, not visible on the map, could offer unique insights into enrollment patterns influenced by their distinctive geographic and demographic factors. Including their data may provide a more comprehensive picture.
+
+9. **Implications for Policy and Planning**:
+   - States with higher average enrollments may need targeted policies for infrastructure development and resource allocation. Understanding regional variations can assist policymakers in tailoring interventions based on specific needs.
+
+#### Suggestions Based on Inferences:
+
+1. **Inclusion of Alaska and Hawaii**:
+   - Include data for Alaska and Hawaii to provide a more comprehensive understanding of enrollment patterns, considering their unique circumstances.
+
+2. **Detailed Regional Analysis**:
+   - Conduct a detailed regional analysis to identify specific factors influencing enrollment variations within regions. This can guide targeted policies for each state.
+
+3. **Collaborative Planning Among Neighbors**:
+   - Encourage collaborative planning and information-sharing among neighboring states with varying enrollments to foster cross-state learning and resource optimization.
+
+4. **Population Projections**:
+   - Consider incorporating population growth projections into educational planning to anticipate future enrollment trends and allocate resources effectively.
+
+5. **Infrastructure Investment**:
+   - States with higher average enrollments may need strategic investments in educational infrastructure to accommodate larger student populations.
+
+6. **Policy Flexibility**:
+   - Develop policies that provide flexibility for states with different enrollment patterns, acknowledging the diverse educational landscapes across the country.
+
+These suggestions aim to enhance the depth and applicability of the analysis, facilitating informed decision-making for educational policies and planning across the United States.
+
+
 
 ```{r}
 library(tidyverse)
@@ -190,6 +477,62 @@ state_choropleth(avg_ratio_by_state,
                  title = "Average Total Enrolment across each State",
                  legend = "Total Enrollment")
 ```
+
+### Analysis of Title I Entitlement by State in the United States:
+
+#### Key Inferences:
+
+1. **High Entitlement States**:
+   - Darkest shades in the southern region (Mississippi, Louisiana, Alabama) indicate a higher percentage of Title I entitled schools, suggesting elevated levels of economic disadvantage in these states.
+
+2. **Lowest Entitlement States**:
+   - Lightest shades in states like Utah, Nevada, and North Dakota represent the lowest percentages of Title I schools, potentially reflecting lower poverty levels or a smaller proportion of students from low-income families.
+
+3. **Regional Trends**:
+   - Southern states consistently exhibit a higher percentage of Title I schools, indicating a regional trend linked to socioeconomic factors, state funding mechanisms, and wealth distribution.
+
+4. **Northeastern and Midwestern Variations**:
+   - Northeastern and Midwestern states show a mix of percentages, suggesting diverse economic conditions and policy influences within each state.
+
+5. **Mid-Range States**:
+   - States in the middle range indicate a balanced distribution of Title I schools, possibly reflecting a mix of urban and rural areas with varying economic statuses.
+
+6. **Implications for Policy**:
+   - States with higher percentages may require more federal support and resources to address educational disparities, while those with lower percentages may have different policy needs and strategies.
+
+7. **Correlation with Poverty Rates**:
+   - The percentage of Title I schools likely correlates with poverty rates, with states having darker shades potentially indicating higher poverty rates.
+
+8. **Influence of State Education Policies**:
+   - Differences across states may be influenced by how each state implements federal education funding and its own education policies, impacting the distribution of Title I schools.
+
+9. **Rural vs. Urban Considerations**:
+   - The map does not distinguish between urban and rural areas, influencing the interpretation. Urban areas might have a higher concentration of Title I schools compared to rural areas.
+
+10. **Data Interpretation**:
+   - Interpretation should consider that percentages represent the proportion of schools with Title I entitlement, not the proportion of students. The size of schools should be considered in understanding the data.
+
+#### Suggestions Based on Inferences:
+
+1. **Urban-Rural Breakdown**:
+   - Provide an additional breakdown of Title I entitlement based on urban and rural classifications to offer a more nuanced understanding of disparities.
+
+2. **Poverty Rate Context**:
+   - Include context on poverty rates alongside the percentage of Title I schools to enhance the interpretation of socioeconomic patterns.
+
+3. **State Policy Analysis**:
+   - Conduct a detailed analysis of state education policies to understand how they influence the distribution of Title I schools and propose targeted policy recommendations.
+
+4. **Interactive Map Features**:
+   - Consider incorporating interactive features that allow users to explore detailed information about each state, providing a more engaging and informative experience.
+
+5. **Collaborative Research**:
+   - Encourage collaborative research with state-level education departments to obtain additional insights and ensure accuracy in the representation of Title I entitlement.
+
+These suggestions aim to enhance the depth of the analysis, ensuring a more comprehensive and context-rich interpretation of Title I entitlement patterns across the United States.
+
+
+
 ```{r}
 library(tidyverse)
 library(usdata)
@@ -216,6 +559,8 @@ state_choropleth(percentage_yes_by_state,
                  legend = "Percentage")
 
 ```
+
+
 
 ```{r}
 data_filtered <- data %>%
