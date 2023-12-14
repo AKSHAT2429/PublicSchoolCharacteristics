@@ -13,6 +13,8 @@ library(tibble)
 library(ggplot2)
 library(choroplethr)
 library(scales)
+library(parcoords)
+library(ggplot2)
 
 ```
 
@@ -261,5 +263,64 @@ alluvial_plot <- ggplot(data_filtered,
 
 # Print the alluvial diagram
 print(alluvial_plot)
+```
+
+```{r}
+data2 <- select(data1, c("AMALM","AMALF","ASALM",	"ASALF","BLALM","BLALF","HPALM","HPALF","HIALM","HIALF","TRALM",	"TRALF"	,"WHALM"	,"WHALF"))
+
+data2 <- as.data.frame(sapply(data2, as.numeric))
+
+sums_df <- data.frame(t(colSums(data2, na.rm = TRUE)))
+
+colnames(sums_df) <- colnames(data2)
+
+reshaped_df <- sums_df %>%
+  pivot_longer(cols = everything(), names_to = c("Race", ".value"), names_pattern = "(..)(...)")
+
+reshaped_df <- tidyr::gather(reshaped_df, key = "Gender", value = "Value", -Race)
+
+ggplot(reshaped_df, aes(x = Race, y = Value, fill = Gender)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  labs(title = "Grouped Bar Chart",
+       x = "Race",
+       y = "Enrollment") +
+  scale_fill_manual(values = c("ALF" = "pink", "ALM" = "blue")) +
+  theme_minimal()
+```
+
+
+```{r}
+data_r <- select(data1,c("LSTATE","AM","AS","BL","HP","HI","WH"))
+
+result_r <- data_r %>%
+  group_by(LSTATE) %>%
+  mutate(across(everything(), ~sum(.,na.rm = TRUE))) %>%
+  distinct()
+
+parcoords(
+  result_r,
+  rownames = FALSE,
+  brushMode = "1D-axes"
+)
+```
+
+```{r}
+data_n <- select(data1,c("ULOCALE","AM","AS","BL","HP","HI","WH"))
+
+result_n <- data_n %>%
+  group_by(ULOCALE) %>%
+  mutate(across(everything(), ~sum(.,na.rm = TRUE))) %>%
+  distinct()
+
+result_n <- pivot_longer(result_n, cols = c("AM","AS","BL","HP","HI","WH"), names_to = "Race", values_to = "Enrollment")
+
+ggplot(result_n, aes(x = ULOCALE, y = Enrollment, fill = Race)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  facet_wrap(~ Race,scales = "free_y", ncol = 2) +
+  labs(title = "Enrollment by Race and Locality",
+       x = "Locality",
+       y = "Enrollment") +
+  theme_minimal()
+
 ```
 
