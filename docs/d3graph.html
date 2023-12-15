@@ -138,7 +138,13 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#analysis-of-student-enrollment-by-locality-and-school-level" id="toc-analysis-of-student-enrollment-by-locality-and-school-level" class="nav-link active" data-scroll-target="#analysis-of-student-enrollment-by-locality-and-school-level"><span class="header-section-number">4.0.1</span> Analysis of Student Enrollment by Locality and School Level:</a></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/SahilBhave/PublicSchoolCharacteristics.git/edit/main/d3graph.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/SahilBhave/PublicSchoolCharacteristics.git/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -160,6 +166,9 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
+<section id="analysis-of-student-enrollment-by-locality-and-school-level" class="level3" data-number="4.0.1">
+<h3 data-number="4.0.1" class="anchored" data-anchor-id="analysis-of-student-enrollment-by-locality-and-school-level"><span class="header-section-number">4.0.1</span> Analysis of Student Enrollment by Locality and School Level:</h3>
+<p>In order to see the distribution of schools across school levels for various localities, select a locality in the dropdown below. The distribution of schools in the corresponding locality will appear.</p>
 <style>
   * {
     font-family: sans-serif;
@@ -174,8 +183,64 @@ ul.task-list li input[type="checkbox"] {
 <script src="https://d3js.org/d3.v6.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
 <script src="./scripts/myscript.js"></script>
+<section id="overview" class="level4" data-number="4.0.1.1">
+<h4 data-number="4.0.1.1" class="anchored" data-anchor-id="overview"><span class="header-section-number">4.0.1.1</span> Overview:</h4>
+<ul>
+<li><em>Localities</em>: Data is segmented into City, Rural, Suburb, and Town.</li>
+<li><em>School Levels</em>: Six levels represented with distinct colors.</li>
+</ul>
+</section>
+<section id="analysis-by-locality" class="level4" data-number="4.0.1.2">
+<h4 data-number="4.0.1.2" class="anchored" data-anchor-id="analysis-by-locality"><span class="header-section-number">4.0.1.2</span> Analysis by Locality:</h4>
+<ol type="1">
+<li><strong>City</strong>:
+<ul>
+<li><em>Elementary</em> has the highest enrollment, typical for foundational education.</li>
+<li><em>High</em> and <em>Secondary</em> levels show substantial enrollment, indicating a strong secondary education system.</li>
+<li><em>Prekindergarten</em> and <em>Adult Education</em> have the lowest enrollment, suggesting lesser demand or availability in urban areas.</li>
+</ul></li>
+<li><strong>Rural</strong>:
+<ul>
+<li><em>Elementary</em> enrollment is high but greater than in cities.</li>
+<li><em>High</em> school enrollment increases significantly.</li>
+<li><em>Adult Education</em> is minimal, indicating fewer opportunities for continuing education in rural settings.</li>
+</ul></li>
+<li><strong>Suburb</strong>:
+<ul>
+<li><em>Elementary</em> enrollment is high, reflecting family-centric demographics.</li>
+<li><em>High</em> and <em>Secondary</em> levels have lower enrollments, following a general trend across all localities.</li>
+<li><em>Prekindergarten</em> and <em>Adult Education</em> levels are the least populated, possibly due to demographic patterns or service availability.</li>
+</ul></li>
+<li><strong>Town</strong>:
+<ul>
+<li><em>Elementary</em> has the highest enrollment at a smaller scale than cities and suburbs.</li>
+<li><em>High</em> school shows moderate enrollments, significant for smaller communities.</li>
+<li><em>Adult Education</em> has very low representation, suggesting less prevalence or prioritization in town settings.</li>
+</ul></li>
+</ol>
+</section>
+<section id="key-inferences" class="level4" data-number="4.0.1.3">
+<h4 data-number="4.0.1.3" class="anchored" data-anchor-id="key-inferences"><span class="header-section-number">4.0.1.3</span> Key Inferences:</h4>
+<ol type="1">
+<li><strong>Elementary Education Priority</strong>: Across all localities, elementary education consistently records the highest enrollment, underscoring its foundational importance in the educational landscape.</li>
+<li><strong>Urban vs Rural Enrollment Disparities</strong>: Rural exhibit the highest enrollments across almost all levels, possibly influenced by higher population density and resource allocation. Understanding and addressing these urban-rural disparities could lead to more equitable educational opportunities.</li>
+<li><strong>Challenges in Adult Education</strong>: Adult education shows minimal representation across all localities. This could be attributed to factors such as limited program availability, challenges in work-life balance, or a perceived lower value of continuing education in adulthood. Exploring strategies to enhance adult education accessibility and relevance may be beneficial.</li>
+<li><strong>Educational Progression Patterns</strong>: The drop-off in enrollment from elementary to high and secondary levels suggests potential challenges like dropout rates, transitions to vocational training, or demographic shifts. Implementing targeted interventions to address these transition points could enhance educational continuity.</li>
+</ol>
+</section>
+<section id="suggestions-based-on-inferences" class="level4" data-number="4.0.1.4">
+<h4 data-number="4.0.1.4" class="anchored" data-anchor-id="suggestions-based-on-inferences"><span class="header-section-number">4.0.1.4</span> Suggestions Based on Inferences:</h4>
+<ol type="1">
+<li><strong>Equity Initiatives</strong>: Implement equity-focused initiatives to address enrollment disparities between urban and rural areas. This could involve targeted resource allocation, infrastructure development, or specialized programs tailored to the unique needs of each locality.</li>
+<li><strong>Promotion of Adult Education</strong>: Develop awareness campaigns and flexible program structures to promote adult education across localities. Understanding the specific barriers to adult education enrollment and addressing them can enhance the overall educational landscape.</li>
+<li><strong>Transition Support Programs</strong>: Introduce transition support programs to facilitate a smoother progression from elementary to high and secondary levels. Identifying and addressing the factors contributing to enrollment drop-offs can contribute to better educational outcomes.</li>
+<li><strong>Community Engagement</strong>: Foster community engagement initiatives to understand and address the contextual factors influencing enrollment trends. Collaborative efforts involving educators, parents, and local community leaders can provide valuable insights and solutions.</li>
+</ol>
+<p>These suggestions aim to leverage the inferences drawn from the analysis, addressing specific challenges and enhancing the overall effectiveness of educational programs across diverse localities and school levels.</p>
 
 
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -431,7 +496,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/SahilBhave/PublicSchoolCharacteristics.git/edit/main/d3graph.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/SahilBhave/PublicSchoolCharacteristics.git/issues/new" class="toc-action">Report an issue</a></p></div></div></div>
+    </div>
     <div class="nav-footer-right">This book was built with <a href="https://quarto.org/">Quarto</a>.</div>
   </div>
 </footer>
