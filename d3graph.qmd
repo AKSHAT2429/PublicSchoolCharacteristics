@@ -1,5 +1,5 @@
 # Interactive graph
-### Analysis of School Count by Locality and School Level:
+## Analysis of School Count by Locality and School Level:
 
 In order to see the distribution of schools across school levels for various localities, select a locality in the dropdown below. The distribution of schools in the corresponding locality will appear.
 
@@ -19,12 +19,12 @@ In order to see the distribution of schools across school levels for various loc
 <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
 <script src="./scripts/myscript.js"></script>
 
-#### Overview:
+### Overview:
 
 -   *Localities*: Data is segmented into City, Rural, Suburb, and Town.
 -   *School Levels*: Six levels represented with distinct colors.
 
-#### Analysis by Locality:
+### Analysis by Locality:
 
 1.  **City**:
     -   *Elementary* has the highest school count, typical for foundational education.
@@ -43,14 +43,14 @@ In order to see the distribution of schools across school levels for various loc
     -   *High* school shows moderate counts, significant for smaller communities.
     -   *Adult Education* has very low representation, suggesting less prevalence or prioritization in town settings.
 
-#### Key Inferences:
+### Key Inferences:
 
 1.  **Elementary Education Priority**: Across all localities, elementary education consistently records the highest school counts, underscoring its foundational importance in the educational landscape.
 2.  **Urban vs Rural Enrollment Disparities**: Rural exhibit the highest school counts across almost all levels, possibly influenced by higher population density and resource allocation. Understanding and addressing these urban-rural disparities could lead to more equitable educational opportunities.
 3.  **Challenges in Adult Education**: Adult education shows minimal representation across all localities. This could be attributed to factors such as limited program availability, challenges in work-life balance, or a perceived lower value of continuing education in adulthood. Exploring strategies to enhance adult education accessibility and relevance may be beneficial.
 4.  **Educational Progression Patterns**: The drop-off in the number of schools from elementary to high and secondary levels suggests potential challenges like dropout rates, transitions to vocational training, or demographic shifts. Implementing targeted interventions to address these transition points could enhance educational continuity.
 
-#### Suggestions Based on Inferences:
+### Suggestions Based on Inferences:
 
 1.  **Equity Initiatives**: Implement equity-focused initiatives to school count disparities between urban and rural areas. This could involve targeted resource allocation, infrastructure development, or specialized programs tailored to the unique needs of each locality.
 2.  **Promotion of Adult Education**: Develop awareness campaigns and flexible program structures to promote adult education across localities. Understanding the specific barriers to adult education enrollment and addressing them can enhance the overall educational landscape.
