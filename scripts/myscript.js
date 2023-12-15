@@ -21,7 +21,7 @@ d3.csv("https://raw.githubusercontent.com/SahilBhave/PublicSchoolCharacteristics
     .text(function(d) { return d; });
 
   // Create SVG container for the chart
-  var width = 700; // Adjust the width based on your needs
+  var width = 600; // Adjust the width based on your needs
   var height = 500; // Adjust the height based on your needs
 
   var svg = d3.select("#chart")
