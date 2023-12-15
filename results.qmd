@@ -293,7 +293,6 @@ if (nrow(duplicates) > 0) {
   message("Duplicate entries found. Removing duplicates.")
   percentage_yes_by_state <- percentage_yes_by_state[!duplicated(percentage_yes_by_state$region), ]
 }
-
 # Plotting the choropleth
 state_choropleth(percentage_yes_by_state,
                  title = "Percentage of Title I entitled schools by State",
@@ -383,9 +382,9 @@ alluvial_plot <- ggplot(data_filtered,
                         aes(axis1 = ULOCALE, axis2 = SCHOOL_LEVEL, axis3 = TITLEI, axis4 = VIRTUAL, y = TOTAL)) +
   geom_alluvium(aes(fill = ULOCALE)) +
   geom_stratum() +
-  labs(title = "Average Student-Teacher Ratio by School Type",
+  labs(title = "Interplay of Locality, School Level, Title I Status, and Education Mode",
        axis1 = "Type of Locality", axis2 = "School Level", axis3 = "TITLE I Entitlement", axis4 = "Mode of Education",
-       y = "Average Student-Teacher Ratio",
+       y = "Total Enrollment",
        fill = "Locality Type") +
   geom_text(stat = "stratum", aes(label = after_stat(stratum))) +
   theme_minimal()
