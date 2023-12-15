@@ -1,5 +1,5 @@
 # Interactive graph
-### Analysis of Student Enrollment by Locality and School Level:
+### Analysis of School Count by Locality and School Level:
 
 In order to see the distribution of schools across school levels for various localities, select a locality in the dropdown below. The distribution of schools in the corresponding locality will appear.
 
@@ -8,7 +8,7 @@ In order to see the distribution of schools across school levels for various loc
     font-family: sans-serif;
   }
 </style> 
-
+<H5>Distribution of School Count by Locality and School Level</H5>
 <div id="chart2">
 </div>
 
@@ -27,32 +27,32 @@ In order to see the distribution of schools across school levels for various loc
 #### Analysis by Locality:
 
 1.  **City**:
-    -   *Elementary* has the highest enrollment, typical for foundational education.
-    -   *High* and *Secondary* levels show substantial enrollment, indicating a strong secondary education system.
-    -   *Prekindergarten* and *Adult Education* have the lowest enrollment, suggesting lesser demand or availability in urban areas.
+    -   *Elementary* has the highest school count, typical for foundational education.
+    -   *High* and *Secondary* levels show substantial school counts, indicating a strong secondary education system.
+    -   *Prekindergarten* and *Adult Education* have the lowest school count, suggesting lesser demand or availability in urban areas.
 2.  **Rural**:
-    -   *Elementary* enrollment is high but greater than in cities.
-    -   *High* school enrollment increases significantly.
+    -   *Elementary* school count is high but greater than in cities.
+    -   *High* school count increases significantly.
     -   *Adult Education* is minimal, indicating fewer opportunities for continuing education in rural settings.
 3.  **Suburb**:
-    -   *Elementary* enrollment is high, reflecting family-centric demographics.
-    -   *High* and *Secondary* levels have lower enrollments, following a general trend across all localities.
+    -   *Elementary* school count is high, reflecting family-centric demographics.
+    -   *High* and *Secondary* levels have lower counts, following a general trend across all localities.
     -   *Prekindergarten* and *Adult Education* levels are the least populated, possibly due to demographic patterns or service availability.
 4.  **Town**:
-    -   *Elementary* has the highest enrollment at a smaller scale than cities and suburbs.
-    -   *High* school shows moderate enrollments, significant for smaller communities.
+    -   *Elementary* has the highest school count at a smaller scale than cities and suburbs.
+    -   *High* school shows moderate counts, significant for smaller communities.
     -   *Adult Education* has very low representation, suggesting less prevalence or prioritization in town settings.
 
 #### Key Inferences:
 
-1.  **Elementary Education Priority**: Across all localities, elementary education consistently records the highest enrollment, underscoring its foundational importance in the educational landscape.
-2.  **Urban vs Rural Enrollment Disparities**: Rural exhibit the highest enrollments across almost all levels, possibly influenced by higher population density and resource allocation. Understanding and addressing these urban-rural disparities could lead to more equitable educational opportunities.
+1.  **Elementary Education Priority**: Across all localities, elementary education consistently records the highest school counts, underscoring its foundational importance in the educational landscape.
+2.  **Urban vs Rural Enrollment Disparities**: Rural exhibit the highest school counts across almost all levels, possibly influenced by higher population density and resource allocation. Understanding and addressing these urban-rural disparities could lead to more equitable educational opportunities.
 3.  **Challenges in Adult Education**: Adult education shows minimal representation across all localities. This could be attributed to factors such as limited program availability, challenges in work-life balance, or a perceived lower value of continuing education in adulthood. Exploring strategies to enhance adult education accessibility and relevance may be beneficial.
-4.  **Educational Progression Patterns**: The drop-off in enrollment from elementary to high and secondary levels suggests potential challenges like dropout rates, transitions to vocational training, or demographic shifts. Implementing targeted interventions to address these transition points could enhance educational continuity.
+4.  **Educational Progression Patterns**: The drop-off in the number of schools from elementary to high and secondary levels suggests potential challenges like dropout rates, transitions to vocational training, or demographic shifts. Implementing targeted interventions to address these transition points could enhance educational continuity.
 
 #### Suggestions Based on Inferences:
 
-1.  **Equity Initiatives**: Implement equity-focused initiatives to address enrollment disparities between urban and rural areas. This could involve targeted resource allocation, infrastructure development, or specialized programs tailored to the unique needs of each locality.
+1.  **Equity Initiatives**: Implement equity-focused initiatives to school count disparities between urban and rural areas. This could involve targeted resource allocation, infrastructure development, or specialized programs tailored to the unique needs of each locality.
 2.  **Promotion of Adult Education**: Develop awareness campaigns and flexible program structures to promote adult education across localities. Understanding the specific barriers to adult education enrollment and addressing them can enhance the overall educational landscape.
 3.  **Transition Support Programs**: Introduce transition support programs to facilitate a smoother progression from elementary to high and secondary levels. Identifying and addressing the factors contributing to enrollment drop-offs can contribute to better educational outcomes.
 4.  **Community Engagement**: Foster community engagement initiatives to understand and address the contextual factors influencing enrollment trends. Collaborative efforts involving educators, parents, and local community leaders can provide valuable insights and solutions.
